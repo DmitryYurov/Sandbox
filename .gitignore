@@ -1,3 +1,4 @@
 *.pyc
 *.sqlite*
 web_bornagain/.idea/*
+.coverage
