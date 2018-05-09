@@ -1,3 +1,3 @@
 # Sandbox
 
-* web_bornagain - a stub for BornAgain website.
+* web_bornagain - a stub for BornAgain remote execution web-interface.
