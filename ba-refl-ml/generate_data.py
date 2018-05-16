@@ -22,7 +22,7 @@ def get_beta(delta):
     return np.exp(np.random.uniform(min, max))
 
 
-def get_height(n_layers):
+def get_heights(n_layers):
     """
     Returns uniformly distributed heights of layers in nanometers.
     Distribution interval is [0.1, 100]
@@ -30,6 +30,16 @@ def get_height(n_layers):
     :return: list of layer heights in nm
     """
     return [(0.1 + (100 - 0.1) * rand) * nm for rand in np.random.random(n_layers)]
+
+
+def get_roughnesses(heights):
+    """
+    Returns a list of random roughnesses for given layer heights.
+    Roughness values are distributed uniform
+    :param heights: layer heights in nm
+    :return: list of roughness values (in nm)
+    """
+    return [np.random.uniform(0, height) * nm for height in heights]
 
 
 def generate_sample_parameters():
@@ -40,9 +50,16 @@ def generate_sample_parameters():
     #  creating reflectivity coefficients (delta, beta) for ambient, intermediate layers and the substrate
     refl_coefs = [[0, 0]] + [[val, get_beta(val)] for val in [get_delta() for i in range(n_layers + 1)]]
     #  generating layer heights
-    heights = get_height(n_layers)
+    heights = get_heights(n_layers)
+    #  generating roughnesses
+    roughnesses = get_roughnesses(heights)
 
+    return {"n_layers": n_layers,
+            "refl_coefs": refl_coefs,
+            "heights": heights,
+            "roughnesses": roughnesses}
 
 
 if __name__ == '__main__':
-    generate_sample_parameters()
+    result = generate_sample_parameters()
+    print(result)
